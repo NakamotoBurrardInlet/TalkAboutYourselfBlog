@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk About Yourself - Premium Blog Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #1e1b4b;
+            --dark-light: #312e81;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .auth-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--gray);
+        }
+
+        .auth-switch button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: underline;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        /* Create Post Section */
+        .create-post {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-post h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Posts Feed */
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .post {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .post-author-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 16px;
+        }
+
+        .post-time {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .post-content {
+            color: #333;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: none;
+            background: var(--light);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-btn.liked {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .comment {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .comment-text {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .comment-input input {
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .widget-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats Widget */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 15px;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Trending Topics */
+        .topic-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--light);
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .topic-tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            padding: 12px;
+            border-left: 3px solid var(--primary);
+            background: var(--light);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .activity-time {
+            color: var(--gray);
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Suggestions Widget */
+        .user-suggestion {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .suggestion-detail {
+            color: var(--gray);
+            font-size: 12px;
+        }
+
+        .follow-btn {
+            padding: 6px 16px;
+            font-size: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-container {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Content will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        // Data Store (In-memory database simulation)
+        const DataStore = {
+            users: [],
+            posts: [],
+            currentUser: null,
+            
+            init() {
+                // Load from memory (in a real app, this would be localStorage or API)
+                const saved = this.loadFromMemory();
+                if (saved) {
+                    this.users = saved.users || [];
+                    this.posts = saved.posts || [];
+                    this.currentUser = saved.currentUser || null;
+                }
+                
+                // Add sample data if empty
+                if (this.users.length === 0) {
+                    this.addSampleData();
+                }
+            },
+            
+            addSampleData() {
+                const sampleUsers = [
+                    { id: 1, username: 'alex_tech', email: 'alex@example.com', password: 'demo123', bio: 'Tech enthusiast & blogger' },
+                    { id: 2, username: 'sarah_designs', email: 'sarah@example.com', password: 'demo123', bio: 'UI/UX Designer' },
+                    { id: 3, username: 'mike_dev', email: 'mike@example.com', password: 'demo123', bio: 'Full-stack developer' }
+                ];
+                
+                const samplePosts = [
+                    {
+                        id: 1,
+                        author: 'alex_tech',
+                        content: 'Just discovered an amazing new framework that makes web development so much easier! The component-based architecture is incredibly intuitive. Who else is excited about modern web technologies? 🚀',
+                        timestamp: Date.now() - 3600000,
+                        likes: 24,
+                        likedBy: [],
+                        comments: [
+                            { id: 1, author: 'sarah_designs', text: 'This sounds interesting! Which framework are you talking about?', timestamp: Date.now() - 3000000 }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        author: 'sarah_designs',
+                        content: 'Design tip of the day: Always prioritize user experience over aesthetics. A beautiful interface that\'s hard to use is still a bad interface. Keep it simple, keep it functional! 💡',
+                        timestamp: Date.now() - 7200000,
+                        likes: 42,
+                        likedBy: [],
+                        comments: []
+                    },
+                    {
+                        id: 3,
+                        author: 'mike_dev',
+                        content: 'Spent the entire weekend debugging a production issue. Finally found it - a single typo in a configuration file. Sometimes coding feels like detective work! 🔍',
+                        timestamp: Date.now() - 10800000,
+                        likes: 18,
+                        likedBy: [],
+                        comments: [
+                            { id: 1, author: 'alex_tech', text: 'Been there! Those are the hardest bugs to find.', timestamp: Date.now() - 9000000 }
+                        ]
+                    }
+                ];
+                
+                this.users = sampleUsers;
+                this.posts = samplePosts;
+                this.saveToMemory();
+            },
+            
+            saveToMemory() {
+                // In a real app, this would use localStorage or send to server
+                window.appData = {
+                    users: this.users,
+                    posts: this.posts,
+                    currentUser: this.currentUser
+                };
+            },
+            
+            loadFromMemory() {
+                return window.appData || null;
+            },
+            
+            createUser(userData) {
+                const user = {
+                    id: this.users.length + 1,
+                    ...userData,
+                    createdAt: Date.now()
+                };
+                this.users.push(user);
+                this.saveToMemory();
+                return user;
+            },
+            
+            findUser(email, password) {
+                return this.users.find(u => u.email === email && u.password === password);
+            },
+            
+            createPost(postData) {
+                const post = {
+                    id: this.posts.length + 1,
+                    author: this.currentUser.username,
+                    timestamp: Date.now(),
+                    likes: 0,
+                    likedBy: [],
+                    comments: [],
+                    ...postData
+                };
+                this.posts.unshift(post);
+                this.saveToMemory();
+                return post;
+            },
+            
+            toggleLike(postId) {
+                const post = this.posts.find(p => p.id === postId);
+                if (!post) return;
+                
+                const userIndex = post.likedBy.indexOf(this.currentUser.username);
+                if (userIndex > -1) {
+                    post.likedBy.splice(userIndex, 1);
+                    post.likes--;
+                } else {
+                    post.likedBy.push(this.currentUser.username);
+                    post.likes++;
+                }
+                this.saveToMemory();
+            },
+            
+            addComment(postId, commentText) {
+                const post = this.posts.find(p => p.id === postId);
+                if (!post) return;
+                
+                const comment = {
+                    id: post.comments.length + 1,
+                    author: this.currentUser.username,
+                    text: commentText,
+                    timestamp: Date.now()
+                };
+                post.comments.push(comment);
+                this.saveToMemory();
+                return comment;
+            }
+        };
+
+        // UI Manager
+        const UI = {
+            currentView: 'login',
+            
+            showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            },
+            
+            formatTime(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minutes = Math.floor(diff / 60000);
+                const hours = Math.floor(diff / 3600000);
+                const days = Math.floor(diff / 86400000);
+                
+                if (minutes < 1) return 'Just now';
+                if (minutes < 60) return `${minutes}m ago`;
+                if (hours < 24) return `${hours}h ago`;
+                return `${days}d ago`;
+            },
+            
+            renderLoginView() {
+                return `
+                    <div class="auth-container">
+                        <h1 class="auth-title">Welcome Back!</h1>
+                        <p class="auth-subtitle">Sign in to continue sharing your thoughts</p>
+                        
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="loginEmail" required placeholder="your@email.com" value="alex@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="loginPassword" required placeholder="Enter your password" value="demo123">
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;">Sign In</button>
+                        </form>
+                        
+                        <div class="auth-switch">
+                            Don't have an account? <button onclick="UI.showSignup()">Sign Up</button>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 10px; text-align: center; font-size: 14px;">
+                            💡 Demo credentials: alex@example.com / demo123
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderSignupView() {
+                return `
+                    <div class="auth-container">
+                        <h1 class="auth-title">Join Our Community</h1>
+                        <p class="auth-subtitle">Create your account and start blogging</p>
+                        
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="signupUsername" required placeholder="Choose a unique username">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="signupEmail" required placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="signupPassword" required placeholder="Create a strong password">
+                            </div>
+                            <div class="form-group">
+                                <label>Bio (Optional)</label>
+                                <textarea id="signupBio" placeholder="Tell us about yourself..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%;">Create Account</button>
+                        </form>
+                        
+                        <div class="auth-switch">
+                            Already have an account? <button onclick="UI.showLogin()">Sign In</button>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderMainView() {
+                const user = DataStore.currentUser;
+                const posts = DataStore.posts;
+                const stats = this.calculateStats();
+                
+                return `
+                    <header class="header">
+                        <div class="logo">✨ Talk About Yourself</div>
+                        <div class="nav-buttons">
+                            <div class="user-info">
+                                <div class="user-avatar">${user.username[0].toUpperCase()}</div>
+                                <span>${user.username}</span>
+                            </div>
+                            <button class="btn-danger" onclick="App.logout()">Logout</button>
+                        </div>
+                    </header>
+                    
+                    <div class="main-content">
+                        <div>
+                            <div class="create-post">
+                                <h3>📝 What's on your mind?</h3>
+                                <form id="createPostForm">
+                                    <div class="form-group">
+                                        <textarea id="postContent" placeholder="Share your thoughts, ideas, or experiences..." required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn-primary">Publish Post</button>
+                                </form>
+                            </div>
+                            
+                            <div class="posts-container" id="postsContainer">
+                                ${posts.map(post => this.renderPost(post)).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar">
+                            ${this.renderStatsWidget(stats)}
+                            ${this.renderTrendingWidget()}
+                            ${this.renderActivityWidget()}
+                            ${this.renderSuggestionsWidget()}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderPost(post) {
+                const isLiked = post.likedBy.includes(DataStore.currentUser.username);
+                
+                return `
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-avatar">${post.author[0].toUpperCase()}</div>
+                            <div class="post-author-info">
+                                <div class="post-author">${post.author}</div>
+                                <div class="post-time">${this.formatTime(post.timestamp)}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="post-content">${post.content}</div>
+                        
+                        <div class="post-actions">
+                            <button class="action-btn ${isLiked ? 'liked' : ''}" onclick="App.toggleLike(${post.id})">
+                                ❤️ ${post.likes} Likes
+                            </button>
+                            <button class="action-btn" onclick="App.toggleComments(${post.id})">
+                                💬 ${post.comments.length} Comments
+                            </button>
+                        </div>
+                        
+                        <div class="comments-section hidden" id="comments-${post.id}">
+                            ${post.comments.map(c => `
+                                <div class="comment">
+                                    <div class="comment-author">${c.author}</div>
+                                    <div class="comment-text">${c.text}</div>
+                                </div>
+                            `).join('')}
+                            
+                            <div class="comment-input">
+                                <input type="text" placeholder="Write a comment..." id="commentInput-${post.id}">
+                                <button class="btn-primary" onclick="App.addComment(${post.id})">Post</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderStatsWidget(stats) {
+                return `
+                    <div class="widget">
+                        <div class="widget-title">📊 Your Stats</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-value">${stats.posts}</span>
+                                <span class="stat-label">Posts</span>
+                            </div>
+                            <div class="stat-item" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                                <span class="stat-value">${stats.likes}</span>
+                                <span class="stat-label">Likes</span>
+                            </div>
+                            <div class="stat-item" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <span class="stat-value">${stats.comments}</span>
+                                <span class="stat-label">Comments</span>
+                            </div>
+                            <div class="stat-item" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                                <span class="stat-value">${stats.engagement}%</span>
+                                <span class="stat-label">Engagement</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderTrendingWidget() {
+                const topics = ['#WebDev', '#Design', '#Coding', '#Tech', '#AI', '#Productivity'];
+                return `
+                    <div class="widget">
+                        <div class="widget-title">🔥 Trending Topics</div>
+                        <div>
+                            ${topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderActivityWidget() {
+                return `
+                    <div class="widget">
+                        <div class="widget-title">⚡ Recent Activity</div>
+                        <div class="activity-item">
+                            <strong>sarah_designs</strong> liked your post
+                            <span class="activity-time">2 hours ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <strong>mike_dev</strong> commented on your post
+                            <span class="activity-time">5 hours ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <strong>alex_tech</strong> started following you
+                            <span class="activity-time">1 day ago</span>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderSuggestionsWidget() {
+                const suggestions = [
+                    { name: 'emma_code', detail: 'Software Engineer', initial: 'E' },
+                    { name: 'john_ui', detail: 'Product Designer', initial: 'J' },
+                    { name: 'lisa_pm', detail: 'Project Manager', initial: 'L' }
+                ];
+                
+                return `
+                    <div class="widget">
+                        <div class="widget-title">👥 Suggested Connections</div>
+                        ${suggestions.map(s => `
+                            <div class="user-suggestion">
+                                <div class="suggestion-avatar">${s.initial}</div>
+                                <div class="suggestion-info">
+                                    <div class="suggestion-name">${s.name}</div>
+                                    <div class="suggestion-detail">${s.detail}</div>
+                                </div>
+                                <button class="follow-btn">Follow</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            },
+            
+            calculateStats() {
+                const userPosts = DataStore.posts.filter(p => p.author === DataStore.currentUser.username);
+                const totalLikes = userPosts.reduce((sum, p) => sum + p.likes, 0);
+                const totalComments = userPosts.reduce((sum, p) => sum + p.comments.length, 0);
+                const engagement = userPosts.length > 0 ? Math.round(((totalLikes + totalComments) / userPosts.length) * 10) : 0;
+                
+                return {
+                    posts: userPosts.length,
+                    likes: totalLikes,
+                    comments: totalComments,
+                    engagement: engagement
+                };
+            },
+            
+            showLogin() {
+                this.currentView = 'login';
+                this.render();
+            },
+            
+            showSignup() {
+                this.currentView = 'signup';
+                this.render();
+            },
+            
+            showMain() {
+                this.currentView = 'main';
+                this.render();
+            },
+            
+            render() {
+                const app = document.getElementById('app');
+                
+                if (this.currentView === 'login') {
+                    app.innerHTML = this.renderLoginView();
+                    document.getElementById('loginForm').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        App.handleLogin();
+                    });
+                } else if (this.currentView === 'signup') {
+                    app.innerHTML = this.renderSignupView();
+                    document.getElementById('signupForm').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        App.handleSignup();
+                    });
+                } else if (this.currentView === 'main') {
+                    app.innerHTML = this.renderMainView();
+                    document.getElementById('createPostForm').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        App.createPost();
+                    });
+                }
+            }
+        };
+
+        // Application Controller
+        const App = {
+            init() {
+                DataStore.init();
+                
+                // Check if user is logged in
+                if (DataStore.currentUser) {
+                    UI.showMain();
+                } else {
+                    UI.showLogin();
+                }
+            },
+            
+            handleLogin() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                const user = DataStore.findUser(email, password);
+                
+                if (user) {
+                    DataStore.currentUser = user;
+                    DataStore.saveToMemory();
+                    UI.showNotification('Welcome back! 🎉', 'success');
+                    UI.showMain();
+                } else {
+                    UI.showNotification('Invalid credentials. Try demo: alex@example.com / demo123', 'error');
+                }
+            },
+            
+            handleSignup() {
+                const username = document.getElementById('signupUsername').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const bio = document.getElementById('signupBio').value;
+                
+                // Check if username or email exists
+                if (DataStore.users.find(u => u.username === username)) {
+                    UI.showNotification('Username already taken!', 'error');
+                    return;
+                }
+                
+                if (DataStore.users.find(u => u.email === email)) {
+                    UI.showNotification('Email already registered!', 'error');
+                    return;
+                }
+                
+                const user = DataStore.createUser({ username, email, password, bio });
+                DataStore.currentUser = user;
+                DataStore.saveToMemory();
+                
+                UI.showNotification('Account created successfully! 🎉', 'success');
+                UI.showMain();
+            },
+            
+            createPost() {
+                const content = document.getElementById('postContent').value.trim();
+                
+                if (!content) {
+                    UI.showNotification('Please write something!', 'error');
+                    return;
+                }
+                
+                DataStore.createPost({ content });
+                UI.showNotification('Post published! 📝', 'success');
+                UI.showMain();
+            },
+            
+            toggleLike(postId) {
+                DataStore.toggleLike(postId);
+                UI.showMain();
+            },
+            
+            toggleComments(postId) {
+                const commentsSection = document.getElementById(`comments-${postId}`);
+                commentsSection.classList.toggle('hidden');
+            },
+            
+            addComment(postId) {
+                const input = document.getElementById(`commentInput-${postId}`);
+                const text = input.value.trim();
+                
+                if (!text) return;
+                
+                DataStore.addComment(postId, text);
+                UI.showNotification('Comment added! 💬', 'success');
+                UI.showMain();
+            },
+            
+            logout() {
+                DataStore.currentUser = null;
+                DataStore.saveToMemory();
+                UI.showNotification('Logged out successfully!', 'success');
+                UI.showLogin();
+            }
+        };
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', () => {
+            App.init();
+        });
+    </script>
+</body>
+</html>
+                            
